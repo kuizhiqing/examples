@@ -1,7 +1,7 @@
 import numpy as np
 
-shape = [1, 1024, 16, 128]
-num = 10
+shape = [2, 1024, 16, 128]
+num = 100
 scale=1
 is_causal=False
 
@@ -12,6 +12,8 @@ deterministic=True
 np_data = "data.npy"
 pd_result = "pd.npy"
 pt_result = "pt.npy"
+pd_result_32 = "pd32.npy"
+pt_result_32 = "pt32.npy"
 
 # for fp16
 atol = 0.001

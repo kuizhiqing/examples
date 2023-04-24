@@ -25,7 +25,7 @@ def attention_naive(q, k, v, causal=False):
     st = torch.matmul(attn, vt)
     return torch.transpose(st, 1, 2)
 
-ofile = open(pt_result, 'wb')
+ofile = open(pt_result_32, 'wb')
 
 def run(query):
     q = torch.from_numpy(query).to(device="cuda:0", dtype=torch.float32)

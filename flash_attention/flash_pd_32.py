@@ -25,7 +25,7 @@ def attention_naive(q, k, v, causal=False):
     o = paddle.matmul(p, vt)
     return paddle.transpose(o, [0, 2, 1, 3])
 
-ofile = open(pd_result, 'wb')
+ofile = open(pd_result_32, 'wb')
 
 def run(query):
 
