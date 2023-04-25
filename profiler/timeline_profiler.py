@@ -1,29 +1,42 @@
 import time
+import sys
 from collections import namedtuple
 
-RECORD = namedtuple('RECORD', ['name', 'stamp', 'duration'])
+RECORD = namedtuple('RECORD', ['name', 'stamp', 'offset', 'duration'])
 
 class TimelineProfiler:
-    def __init__(self, verbose=True):
+    """
+    Usage
+    from timeline_profiler import push_record
+
+    push_record("start")
+    """
+
+    def __init__(self, verbose=True, self_record=True):
         self.records = []
         self.cursor = 0
+        self.pos = time.time()
         self.verbose = verbose
-
+        if self_record:
+            self.record("init")
 
     def record(self, name):
         ct = time.time()
         duration = ct - self.cursor
-        r = RECORD(name, ct, duration)
+        offset = ct - self.pos
+        r = RECORD(name, ct, offset, duration)
         self.records.append(r)
         self.cursor = ct
         if self.verbose:
-            print(r)
+            sys.stderr.write(str(r))
+            sys.stderr.write("\n")
 
     def summary(self):
-        print("== TIMELINE SUMARY BEGIN ==")
+        sys.stderr.write("== TIMELINE SUMARY BEGIN ==\n")
         for r in self.records:
-            print(r)
-        print("==  TIMELINE SUMARY END  ==")
+            sys.stderr.write(str(r))
+            sys.stderr.write("\n")
+        sys.stderr.write("== TIMELINE SUMARY END ==\n")
 
 _GLOBAL_TPS = {}
 global_tp = TimelineProfiler()
